@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Branbox</title>
+        <link href="css/style.css" rel="stylesheet">
+        <!-- Vendor CSS -->
+        <link href="assets/vendors/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+        <link href="assets/vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
+        <link href="assets/vendors/bower_components/sweetalert/dist/sweetalert-override.min.css" rel="stylesheet">
+        <link href="assets/vendors/bower_components/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet">
+        <link href="assets/vendors/bower_components/lightgallery/light-gallery/css/lightGallery.css" rel="stylesheet">
+        <!-- ezhil -->
+        <link href="assets/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+        <!-- ezhil -->
+        <link href="assets/vendors/bower_components/mediaelement/build/mediaelementplayer.css" rel="stylesheet">
+        <link href="assets/vendors/socicon/socicon.min.css" rel="stylesheet">
+        <!-- CSS -->
+        <link href="assets/css/app.min.1.css" rel="stylesheet">
+        <link href="assets/css/app.min.2.css" rel="stylesheet">
+        <!-- Javascript Libraries -->
+        <!-- ezhil -->
+        
+        <!-- ezhil -->
+        <script src="assets/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="assets/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="assets/vendors/bower_components/flot/jquery.flot.js"></script>
+        <script src="assets/vendors/bower_components/flot/jquery.flot.resize.js"></script>
+        <script src="assets/vendors/bower_components/flot.curvedlines/curvedLines.js"></script>
+        <script src="assets/vendors/sparklines/jquery.sparkline.min.js"></script>
+        <script src="assets/vendors/bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+        <script src="assets/vendors/bower_components/moment/min/moment.min.js"></script>
+        <script src="assets/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="assets/vendors/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="assets/vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
+        <script src="assets/vendors/bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+        <script src="assets/vendors/bower_components/Waves/dist/waves.min.js"></script>
+        <script src="assets/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+        <script src="assets/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="assets/vendors/bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+        <script src="assets/vendors/bower_components/Waves/dist/waves.min.js"></script>
+        <script src="assets/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+        <script src="assets/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="assets/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+        <script src="assets/vendors/bower_components/lightgallery/light-gallery/js/lightGallery.min.js"></script>
+        <script src="assets/vendors/bower_components/mediaelement/build/mediaelement-and-player.min.js"></script>
+        <script src="assets/js/functions.js"></script>
+        <!-- ionic/angularjs js -->
+        <script src="lib/ionic/js/ionic.bundle.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+        <script src="lib/ionic/js/angular-ui/angular-ui-router.js"></script>
+        <script src="https://code.angularjs.org/1.4.4/angular-touch.js"></script>
+        <script src="lib/ocLazyLoad/ocLazyLoad.js"></script>
+        <!-- cordova script (this will be a 404 during development) -->
+        <script src="js/cordova.js"></script>
+        <!-- your app's js -->
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/services.js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+        <!--<script src="js/module.js"></script>-->
+    </head>
+    <body ng-controller="MenuController">
+        <header id="header" >
+            <ul class="header-inner">
+                <li id="menu-trigger" data-trigger="#sidebar">
+                    <div class="line-wrap">
+                        <div class="line top"></div>
+                        <div class="line center"></div>
+                        <div class="line bottom"></div>
+                    </div>
+                </li>
+                <li class="logo">
+            <!--<li class="logo hidden-xs">-->
+                <!-- <a href="#dashboard">  style="width:86px; vertical-align:middle; border-radius: 5px; height:43px; margin-top: -2px;"--> <img src="img/logo.jpg" alt="" ><!-- </a> -->
+            </li>
+                <li class="pull-right">
+                    <ul class="top-menu">
+                        <li id="toggle-width">
+                            <div class="toggle-switch">
+                                <input id="tw-switch" type="checkbox" hidden="hidden">
+                                <label for="tw-switch" class="ts-helper"></label>
+                            </div>
+                        </li>
+
+                         <li id="top-search">
+                            <a class="tm-search" href="#"></a>
+                        </li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="tm-message" ><i class="tmn-counts">6</i></a>
+                            <div class="dropdown-menu dropdown-menu-lg pull-right">
+                                <div class="listview">
+                                    <div class="lv-header">
+                                        Offers
+                                    </div>
+                                    <div class="lv-body c-overflow">
+                                        <a class="lv-item" href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="lv-img-sm" src="assets/img/profile-pics/1.jpg" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">David Belle</div>
+                                                    <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item" href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="lv-img-sm" src="assets/img/profile-pics/2.jpg" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">Jonathan Morris</div>
+                                                    <small class="lv-small">Nunc quis diam diamurabitur at dolor elementum, dictum turpis vel</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item" href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="lv-img-sm" src="assets/img/profile-pics/3.jpg" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">Fredric Mitchell Jr.</div>
+                                                    <small class="lv-small">Phasellus a ante et est ornare accumsan at vel magnauis blandit turpis at augue ultricies</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item" href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="lv-img-sm" src="assets/img/profile-pics/4.jpg" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">Glenn Jecobs</div>
+                                                    <small class="lv-small">Ut vitae lacus sem ellentesque maximus, nunc sit amet varius dignissim, dui est consectetur neque</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item" href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="lv-img-sm" src="assets/img/profile-pics/4.jpg" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">Bill Phillips</div>
+                                                    <small class="lv-small">Proin laoreet commodo eros id faucibus. Donec ligula quam, imperdiet vel ante placerat</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <a class="lv-footer" href="#">View All</a>
+                                </div>
+                            </div>
+                        </li>
+                       <li class="dropdown" ng-show="useremail != null">
+                            <a class="tm-settings" data-toggle="dropdown"></a>
+                            <ul class="dropdown-menu pull-right bgm-gray" style="font-size:19px;"> 
+                                <li ><a href="index.html" id="logout" style="font-size:16px;" ><i class="md md-history"></i> Logout</a></li>
+                                <!-- <li></li> -->
+                            </ul>
+                        </li>
+                        <!-- <li>
+                              
+                             <a href="#addTocart"> <i class="md md-shopping-cart md-white md-large"></i></a>
+                        </li> -->
+<!--                         <li class="hidden-xs" id="chat-trigger" data-trigger="#chat">
+                        </li> -->
+                    </ul>
+                </li>
+            </ul>
+            <!-- Top Search Content -->
+            <div id="top-search-wrap">
+                <input type="text">
+                <i id="top-search-close">&times;</i>
+            </div>
+        </header>
+        <section id="main">
+            <aside id="sidebar">
+                <div class="sidebar-inner c-overflow">
+                    <div class="profile-menu">
+                        <a href="#">
+                            <div class="profile-pic  pull-right">
+                                <img src="img/brn4.png" alt="">
+                            </div>
+                            <!-- <div class="profile-info">
+                                Branbox
+                                <i class="md md-arrow-drop-down"></i>
+                            </div> -->
+                        </a>
+                        <ul class="main-menu">
+                            <li>
+                                <a href="profile-about.html"><i class="md md-person"></i> View Profile</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="md md-settings-input-antenna"></i> Privacy Settings</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="md md-settings"></i> Settings</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="md md-history"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ul class="main-menu">
+                        <li><a href="#menu"><i class=" md-restaurant-menu" menu-close="" nav-clear=""></i>Restuarant Menus</a></li>
+                        <li><a href="#latestOffers"> <i class=" md-wallet-giftcard" menu-close="" nav-clear=""></i>Latest Offers</a></li>
+                        <li  ng-show="useremail != null"><a  href="#timeDelivery"><i class="md-alarm" menu-close="" nav-clear=""></i>Timed Delivery</a></li>
+                        <li><a href="#aboutUs"><i class="md md-home" menu-close="" nav-clear=""></i> About Us</a></li>
+                        <li><a href="#location"><i class="md md-location-on" menu-close="" nav-clear=""></i> Locations</a></li> 
+                        <li><a href="#login"><i class="md-person" menu-close="" nav-clear=""></i> My Account </a></li>
+                        <li><a href="#gallery"><i class="md-photo-library" menu-close="" nav-clear=""></i>Gallery</a></li>
+                        <li><a href="#contactForm"><i class="md md-sms" menu-close="" nav-clear=""></i> Contact Us</a></li>                  
+                    </ul>
+
+                
+                    <!-- <ul class="main-menu">
+                        <li class="active"><a href="#login"><i class="md md-person"></i>Login</a></li>
+                        <li><a href="#myAccount"><i class="md md-person"></i>My Account </a></li>
+                        <li class=""><a href="#"><i class="md md-home"></i>Restuarant Menus</a></li>
+                        <li class=""><a href="#"><i class="md md-home"></i>Latest Offers</a></li>
+                        <li><a href="#gallery"><i class="md md-photo-library"></i> Gallery</a></li>
+                        <li><a href="#location"><i class="md md-pin-drop"></i> Locations</a></li>
+                        <li class=""><a href="#aboutUs"><i class="md md-home"></i>About Us</a></li>
+                        <li><a href="#contactForm"><i class="md md-contacts"></i></i>Contact Us</a></li>
+                        
+                    </ul> -->
+                </div>
+            </aside>
+            
+            <section id="content" >
+                <div class="container">
+                    <div ng-view></div>
+                </div>
+            </section>
+        </section>
+    </body>
+</html>
+<script type="text/javascript">
+$("#logout").click(function () {
+
+     localStorage.clear();
+
+})
+</script>

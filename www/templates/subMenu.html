@@ -1,0 +1,90 @@
+<ion-view>
+    <div class="card" ng-controller="SubMenuController">
+        <div class="card-body card-padding">
+             <!-- <div class="card-header jumbotron"> -->
+                <!-- <h2>Menu Categories<small>Select Menu Categories</small></h2> -->
+                <!-- <p></p>
+                <div id="top-search-wrap">
+                    <input type="text">
+                </div> -->
+                <!-- <div class="chat-search"> -->
+                    <!-- <div class="fg-line"> -->
+                        <!-- <input type="search" class="form-control" ng-model="SubMenus" placeholder="Search Menu Category"> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+          
+
+            <!-- <div class="chat-search">
+                <div class="fg-line">
+                    <input type="text" class="form-control" placeholder="Search Sub Menu">
+                </div>
+            </div> --> 
+            <div class="listview" ng-repeat="SubMenus in SubMenuData  | filter:SubMenus">
+                <a href="#items/={{SubMenus.menuId}}={{SubMenus.id}}" class="lv-item">
+                <!-- <a href="#items/=11=2" class="lv-item"> -->
+                    <div class="media">
+                        <div class="pull-left p-relative">
+                            <img alt="" src="{{SubMenus.image}}" class="lv-img-sm">
+                        </div>
+                        <div class="media-body">
+                            <div class="lv-title" id="menu-size">{{SubMenus.name}}</div>
+                            <small class="lv-small">{{SubMenus.name}} Categories</small>
+                        </div>
+                         <!-- <div class="p-relative pull-right">
+                            <i class="md-chevron-right md-lg"></i>
+                        </div> -->
+                    </div>
+                </a>
+               <!--  <a href="#items" class="lv-item">
+                    <div class="media">
+                        <div class="pull-left p-relative">
+                            <img alt="" src="img/bri3.jpg"class="lv-img-sm">
+                        </div>
+                        <div class="media-body">
+                            <div class="lv-title" id="menu-size">Briyani</div>
+                            <small class="lv-small">Food Categories</small>
+                        </div>
+                         <div class="p-relative pull-right">
+                            <i class="md-chevron-right md-lg"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#items" class="lv-item">
+                    <div class="media">
+                        <div class="pull-left p-relative">
+                            <img alt="" src="img/milsh.jpg" class="lv-img-sm">
+                        </div>
+                        <div class="media-body">
+                            <div class="lv-title"id="menu-size">Milk Shake</div>
+                            <small class="lv-small">Ice Cream Categories</small>
+                        </div>
+                         <div class="p-relative pull-right">
+                            <i class="md-chevron-right md-lg"></i>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#items" class="lv-item">
+                    <div class="media">
+                        <div class="pull-left p-relative">
+                            <img alt="" src="img/coldrin.jpg" class="lv-img-sm">
+                        </div>
+                        <div class="media-body">
+                            <div class="lv-title"id="menu-size">Cool Drings</div>
+                            <small class="lv-small">Drinks Categories</small>
+                        </div>
+                         <div class="p-relative pull-right">
+                            <i class="md-chevron-right md-lg"></i>
+                        </div>
+                    </div>
+                </a> -->
+            </div>
+             <!-- <a aria-expanded="false" data-toggle="dropdown" href="" ng-click="goback();" class="btn bgm-deeppurple btn-float z-depth-1 waves-effect pull-right">
+           <i class="md  md-keyboard-backspace"></i>
+        </a> -->
+        </div>
+    </div>
+    
+</ion-view>

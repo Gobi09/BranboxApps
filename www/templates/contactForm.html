@@ -1,0 +1,68 @@
+<style>
+#location {
+    height: 300px;
+    width: auto;
+}
+</style>
+<ion-view>
+<div class="card bs-item z-depth-4" ng-controller="contactCtrl"> 
+    <div class="contacts clearfix row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="card-header">
+                <!-- <div id="location"> </div>   -->
+                <div class="card-body " style="padding-left:10px;" >
+                   <div class="row " style="padding-left:10px;">
+                        <div class="col-md-12 "> 
+                           <center>
+                                <h3><div ng-bind-html="name"></div> </h3>
+                                <!-- <h5><div ng-bind-html="companyName"></div></h5> -->
+                                <h5><div ng-bind-html="address1"></div></h5>
+                                <h5><div ng-bind-html="address2"></div></h5>
+                                <h5><div ng-bind-html="city"></div></h5>
+                           </center>
+                            
+                            
+                        </div>
+                        <a class="btn bgm-teal" ng-href="tel: {{PhonenumberCall}}"><i class="md md-call "></i> {{PhonenumberCall}}</a>
+                          
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+<div class="card">
+        <div class="card-body card-padding" style="padding-left:10px;">
+            <form role="form">
+                <div class="row">
+
+                    <div class="col-sm-12">   
+                        <!-- <h4 class="">Contact US</h4>                    -->
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="md md-person"></i></span>
+                            <div class="fg-line">
+                                <input type="text" placeholder="Full Name" name="username" id="username" class="form-control">
+                            </div>
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="md md-email"></i></span>
+                            <div class="fg-line">
+                                <input type="text" placeholder="Email Address" name="email"  id="email" class="form-control">
+                            </div>
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="md md-comment"></i></span>
+                            <div class="fg-line">
+                                <textarea placeholder="Comments...." rows="5" name="feedbackMessage"  id="feedbackMessage" class="form-control"></textarea>
+                            </div>
+                        </div><br>
+                    </div>
+                </div>
+                <center>
+                    <button type="submit" ng-click="sendFeedBack();" class="btn bgm-deeporange  btn-sm m-t-10">Submit</button>
+                </center>
+                
+            </form>
+            <br>
+        </div>
+    </div>
+</ion-view>

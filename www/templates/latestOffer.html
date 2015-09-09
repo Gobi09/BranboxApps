@@ -1,0 +1,44 @@
+<ion-view>
+        
+        <div class="card" ng-controller="latestOfferController">
+            <div class="card-body card-padding">
+                <div class="card-header jumbotron">
+                    <a ng-show="userid != null" href="#addTocartpage" class="btn bgm-teal waves-effect pull-right">
+                       <i class="md md-shopping-cart md-white "></i>Cart(<span id="cartCount"></span>)
+                    </a>
+                    <!-- <h2>Latest Offers<small></small></h2> -->
+                    <p></p>
+                   
+                </div>
+                <!-- <p class="f-500 c-black m-b-20"><center><strong>Latest offers</strong></center></p>  #DD1C17 -->
+            
+
+                <div class="carousel ng-isolate-scope"  ng-repeat="offers in latestOffers">
+  
+                    <div ng-transclude="" class="carousel-inner">
+                    
+                        <div ng-transclude="" class="item text-center ng-isolate-scope active" >
+                            <a href="" >
+                            <img class="ng-scope" style="width: 100%;" src="{{offers.image}}">
+                            <div  class="carousel-caption">
+                                    <h3 class="ng-binding">{{offers.title}}</h3>
+                                    <p class="ng-binding">{{offers.name}}</p>
+                                    <p class="ng-binding">{{offers.price}} AED</p>
+                            </div>
+                            </a>
+                            <a aria-expanded="false" data-toggle="dropdown" href="" ng-click="Add_toCart($event,$index,offers);" class="btn bgm-deeporange btn-floatLeft z-depth-1 waves-effect pull-right">
+                                <i class="md md-shopping-cart md-white md-large"></i>
+                            </a>
+                        </div>
+                            
+                            
+                    </div>
+                    <br>
+
+                </div>
+
+
+            </div>
+        </div>
+    
+</ion-view>

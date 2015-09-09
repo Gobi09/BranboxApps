@@ -1,0 +1,242 @@
+<ion-view>   
+    <!-- <div class="block-header">
+        <img class="img-responsive img-circle" src="img/logo.jpg">        
+    </div> -->
+    <div class="bs-item z-depth-5">
+        <div class="card" ng-controller="registerForm">            
+                <div class="card-header text-center">
+                    <br>
+                        <h2>User Registration</h2>
+                    <br>
+                </div>
+                <div class="card-body card-padding" style="padding: 15px;">
+                    <!-- ng-click="insertForm()" -->
+                    <!-- ng-submit="insertForm()" -->
+                    <form role="form"  novalidate name="newUser">
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-account-circle"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control" type="text" id="fname" name="fname" ng-minlength="3" ng-maxlength="8" ng-pattern="[a-zA-Z]" ng-model="register.name" placeholder="First Name" required>
+                            </div> 
+                                                   
+                            <div class="error" 
+                                ng-show="newUser.fname.$dirty && newUser.fname.$invalid">
+                                <small class="error" ng-show="newUser.fname.$error.required">
+                                    Your name is required.
+                                </small>                                                                     
+                            </div>  
+                            <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>     
+                        </div>                    
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-vpn-key"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="password" id="password" ng-pattern="/^\d+$/" name="password" ng-model="register.password" placeholder="Password" required>
+                            </div>  
+                            <div class="error" 
+                                ng-show="newUser.password.$dirty && newUser.password.$invalid">
+                                <small class="error" ng-show="newUser.password.$error.required">
+                                    Password is required.
+                                </small>                                                                     
+                            </div> 
+                             <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>  
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-people"></i>
+                            </span>
+                            <div class="select">
+                                <select class="form-control" id="gender">
+                                    <option>Select</option>
+                                    <option value="m">Male</option>
+                                    <option value="f">Female</option>                           
+                                </select>
+                            </div>
+                            <!-- <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="gender">
+                            </div>
+                            <label class="fg-label">Gender</label> -->
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-today"></i>
+                            </span>
+                            <div class="fg-line ">
+                                <input class="form-control date-picker" type="text" id="dob" placeholder="Date of Birth" >
+                            </div>  
+                                                      
+                        </div>                    
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-mail"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="email" id="email" ng-model="register.email" name="email" required placeholder="Email">
+                            </div>
+                            
+                            <div class="error" 
+                                ng-show="newUser.email.$dirty && newUser.email.$invalid">
+                                <small class="error" ng-show="newUser.email.$error.required">
+                                    Email is required.
+                                </small>                                                                     
+                            </div> 
+                            <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>     
+                            
+                        </div>                        
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-phone-iphone"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="mobile" ng-model="register.mobile" name="mobile" required placeholder="Mobile">
+                            </div> 
+                                                      
+                            <div class="error" 
+                                ng-show="newUser.mobile.$dirty && newUser.mobile.$invalid">
+                                <small class="error" ng-show="newUser.mobile.$error.required">
+                                    Mobile Number is required.
+                                </small>                                                                     
+                            </div> 
+                             <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>     
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-home"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="address1" ng-model="address1" name="address1" required placeholder="Address Line 1">
+                            </div>
+                            <div class="error" 
+                                ng-show="newUser.address1.$dirty && newUser.address1.$invalid">
+                                <small class="error" ng-show="newUser.address1.$error.required">
+                                    Address line 1 is required.
+                                </small>                                                                     
+                            </div> 
+                            <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>    
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-home"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="address2" ng-model="address2" name="address2" placeholder="Address Line 2">
+                            </div>
+                                                   
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-place"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="city" ng-model="register.city" name="city" required placeholder="City">
+                            </div> 
+                                                       
+                            <div class="error" 
+                                ng-show="newUser.city.$dirty && newUser.city.$invalid">
+                                <small class="error" ng-show="newUser.city.$error.required">
+                                    City is required.
+                                </small>                                                                     
+                            </div> 
+                             <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>   
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-place"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="state" name="state" ng-model="register.state" required placeholder="State">
+                            </div>
+                            
+                            <div class="error" 
+                                ng-show="newUser.state.$dirty && newUser.state.$invalid">
+                                <small class="error" ng-show="newUser.state.$error.required">
+                                    State is required.
+                                </small>                                                                     
+                            </div> 
+                             <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>   
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-place"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="country" name="country" ng-model="register.country" required placeholder="Country">
+                            </div>   
+                                                  
+                            <div class="error" 
+                                ng-show="newUser.country.$dirty && newUser.country.$invalid">
+                                <small class="error" ng-show="newUser.country.$error.required">
+                                    Country is required.
+                                </small>                                                                     
+                            </div> 
+                             <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>      
+                        </div>                
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <i class="md md-email"></i>
+                            </span>
+                            <div class="fg-line">
+                                <input class="form-control fg-input" type="text" id="postalCode" ng-model="register.postalCode" name="postalCode" required ng-focus placeholder="Postal Code" >
+                                <input class="form-control fg-input" type="hidden" id="bussinessId" value="1">                                
+                            </div>
+                            
+                            <div class="error" 
+                                ng-show="newUser.postalCode.$dirty && newUser.postalCode.$invalid">
+                                <small class="error" ng-show="newUser.postalCode.$error.required">
+                                    Postal code is required.
+                                </small>                                                                     
+                            </div> 
+                            <span class="input-group-addon" style="color:red; font-size:20px;">
+                                *
+                            </span>    
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="">
+                                <i class="input-helper"></i>
+                                Terms and Condition
+                            </label>
+                        </div>
+
+                         <center>
+                            <a type="submit" ng-click="insertForm()" class="btn bgm-deeporange btn-sm waves-effect">Submit</a>
+                            <button type="submit" class="btn bgm-bluegray btn-sm waves-effect" onclick="window.history.back();">Cancel</button>
+                        </center>
+
+
+                        
+                    </form>
+                </div>            
+        </div>
+    </div>
+    <style>
+        .img-responsive 
+        {
+            margin: 0 auto;
+        }
+    </style>
+</ion view>
+<style type="text/css">
+.error{
+    color: #E23237;
+}
+</style>

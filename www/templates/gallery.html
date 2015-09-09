@@ -1,0 +1,35 @@
+<ion-view>
+    <div class="card">
+        <div class="card-body card-padding" style="padding-left: 10px;">
+            <h3 class="">Photos</h3>
+            
+                <div class="pm-body clearfix">
+                    <div class=" clearfix photos">          
+                        <div class="lightbox row">    
+                            <div class="lightbox">
+                                <div ng-repeat="item in galleryImages" data-src="{{item.link}}" class="col-md-3 col-sm-4 col-xs-6" on-finish-render="test">
+                                    <div class="lightbox-item p-item">
+                                        <img ng-src="{{item.link}}" alt="" class="animated flip">
+                                    </div>
+                                </div>  
+                            </div>                         
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body card-padding" style="padding-left: 10px;">
+             <h3 class="">Videos</h3>
+            <!-- <p class="f-500 c-black ">Videos</p> -->
+            <div class="row">
+                <div class="col-sm-6 m-b-20">
+                     <video style="height: 100%; width: 100%" poster="assets/media/big_buck_bunny.jpg" controls="controls" preload="none"> <!-- id could be any according to you -->
+                        <source type="video/mp4" src="assets/media/big_buck_bunny.mp4" />   
+                    </video>
+                </div>  
+            </div>
+        </div>
+    </div>         
+</ion-view>
