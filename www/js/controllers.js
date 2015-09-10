@@ -11,7 +11,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
 .controller('DashCtrl', function($scope,$ocLazyLoad) {
 
     setTimeout(function(){
-     window.location="index1.html";
+     // window.location="index1.html";
       //$location.path('/menu');
     },5000);
   })
@@ -299,17 +299,17 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
               }).error(function(){  
                 alert();
                 });
-                 setTimeout(function(){
+
+                 // setTimeout(function(){
                       
-                      $scope.token=alertmsg.getToken();
-                      setTimeout(function(){
+                 //      $scope.token=alertmsg.getToken();
+                 //      setTimeout(function(){
                       
-                      console.log($scope.token);
-                    },3000);
-                      alert($scope.token);
-                      //$scope.token=alertmsg.dataObj;
-                        
-                    },3000);
+                 //      console.log($scope.token);
+                 //    },3000);
+                 //          //alert($scope.token);
+                 //          //$scope.token=alertmsg.dataObj;                        
+                 //    },3000);
 
           var getMessage={
               id:businessId,
@@ -514,7 +514,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
         }
     }
 
-      $scope.addToCart=function(val,index,json)
+    $scope.addToCart=function(val,index,json)
     {   
 
 
@@ -1189,6 +1189,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
       $("#message").removeClass("open");
       $("#sidebar").removeClass("toggled");
       $("#menu-trigger").removeClass("open");
+      $scope.userid= localStorage.getItem("id");
       $scope.latestOffers="";
       $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxOffers.php',{bussId:businessId}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
       .success(function (json) {
