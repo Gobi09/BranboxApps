@@ -253,14 +253,14 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
   // function preventBack() { window.history.forward(1); }
   
 
-    // window.onbeforeunload = function (e) {
-    //         var e = e || window.event;
+    window.onbeforeunload = function (e) {
+            var e = e || window.event;
             
-    //         if (e) {
-    //             open(location, '_self').close();
-    //         }
+            if (e) {
+                open(location, '_self').close();
+            }
 
-    //      };
+         };
          
         
     localStorage.setItem("splash", 0);
@@ -270,8 +270,9 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
     $scope.loggedIn=localStorage.getItem("loggedIn");
     $scope.userName= localStorage.getItem("userName");
     $scope.userId= localStorage.getItem("id");
-   
+    $scope.businessId=localStorage.getItem("businessId");
         var businessId=1;
+
          $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxOffers.php',{bussId:businessId}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
             .success(function (json) {
                console.log(json);
@@ -299,17 +300,50 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
               }).error(function(){  
                 alert();
                 });
+                
+                
 
-                 // setTimeout(function(){
+
+                    setInterval(function(){
                       
-                 //      $scope.token=alertmsg.getToken();
-                 //      setTimeout(function(){
-                      
-                 //      console.log($scope.token);
-                 //    },3000);
-                 //          //alert($scope.token);
-                 //          //$scope.token=alertmsg.dataObj;                        
-                 //    },3000);
+                      var  data={id:$scope.userId,bId:$scope.businessId,email:$scope.useremail};
+                     //console.log(data);
+                       if(localStorage.getItem("tokenNumber")==null)
+                      {
+                           $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxGetToken.php',data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
+                            .success(function (json) {
+                             // alert(json);
+                            
+                              //return  1; 
+                              if(json.error=="error")
+                              {
+
+                              }
+                              else
+                              {
+                                  
+                                  console.log($scope.Countajax);
+                                  localStorage.setItem("tokenNumber",json.rows[0]['tokenNo']);
+
+                                  $scope.TokenNumber=json.rows[0]['tokenNo'];
+                                  //console.log(json.rows[0]);
+                                  if($scope.TokenNumber!="")
+                                  {
+                                    swal({   
+                                        title: "Your Token Number: "+$scope.TokenNumber,   
+                                        //text: $scope.TokenNumber,   
+                                        timer: 5000,   
+                                        showConfirmButton: false 
+                                    });
+                                  }
+                                }
+                                
+                              }).error(function(){  
+                                  return 0;
+                              });  
+                             }            
+                    },3000);
+                 
 
           var getMessage={
               id:businessId,
