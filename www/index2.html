@@ -255,31 +255,33 @@ $("*#dropdownClose2").click(function () {
 });
 
     
-    setTimeout(function(){
-        alert();
-        var email=  localStorage.getItem("email");
-        var id=  localStorage.getItem("id");
-        var businessId=  localStorage.getItem("businessId");
-        $.ajax({
-                type: "POST",
-                dataType:"json",
-                data:{id:id,bId:bussinessId,email:email},
-                url: 'http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxGetToken.php',
-                crossDomain:true,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                success:function (json)
-                {
-                  alert("alert");
-                },
-                error:function(error)
-                {
+    //setTimeout(function(){
+       
+        // var email= "gobi@appnlogic.com";//  localStorage.getItem("email");
+        // var id= "1"; //localStorage.getItem("id");
+        // var businessId= 1; //localStorage.getItem("businessId");
+        //  alert(id);
+        // $.ajax({
+        //         type: "POST",
+        //         dataType:"json",
+        //         data:{id:id,bId:businessId,email:email},
+        //         url: 'http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxGetToken.php',
+        //         crossDomain:true,
+        //         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        //         success:function (json)
+        //         {
+        //             console.log(json);
+        //             alert("alert");
+        //         },
+        //         error:function(error)
+        //         {
 
-                  window.location="index2.html";
-                }
+        //           //window.location="index2.html";
+        //         }
 
-                
+        // });
 
-    },3000);
+   // },3000000);
 
 
 </script>

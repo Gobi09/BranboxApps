@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ["oc.lazyLoad",'ngRoute','ngSanitize'])
+angular.module('starter.controllers', ['ngRoute','ngSanitize'])
 
 
 
@@ -253,14 +253,14 @@ angular.module('starter.controllers', ["oc.lazyLoad",'ngRoute','ngSanitize'])
   // function preventBack() { window.history.forward(1); }
   
 
-    // window.onbeforeunload = function (e) {
-    //         var e = e || window.event;
+    window.onbeforeunload = function (e) {
+            var e = e || window.event;
             
-    //         if (e) {
-    //             open(location, '_self').close();
-    //         }
+            if (e) {
+                open(location, '_self').close();
+            }
 
-    //      };
+         };
          
         
     localStorage.setItem("splash", 0);
@@ -299,7 +299,17 @@ angular.module('starter.controllers', ["oc.lazyLoad",'ngRoute','ngSanitize'])
               }).error(function(){  
                 alert();
                 });
-
+                 setTimeout(function(){
+                      
+                      $scope.token=alertmsg.getToken();
+                      setTimeout(function(){
+                      
+                      console.log($scope.token);
+                    },3000);
+                      alert($scope.token);
+                      //$scope.token=alertmsg.dataObj;
+                        
+                    },3000);
 
           var getMessage={
               id:businessId,
@@ -313,16 +323,17 @@ angular.module('starter.controllers', ["oc.lazyLoad",'ngRoute','ngSanitize'])
       $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxGetMessage.php',getMessage, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
             .success(function (json) {
                console.log(json);
-               if(json=="undefined")
+               if(json.error=="error")
                {
                   
                   $scope.FeedBackcount=null;
                }
                else
                {  
+                
                   $scope.FeedBackMessage=json.rows;
                   $scope.FeedBackcount=json.rows.length;
-                  console.log(countOffers11);
+                  //console.log(countOffers11);
                   console.log($scope.FeedBackMessage);
                }
                  
@@ -359,7 +370,7 @@ angular.module('starter.controllers', ["oc.lazyLoad",'ngRoute','ngSanitize'])
 
 })
 
-.controller('SubMenuController', function($scope,$http,$location) {
+.controller('SubMenuController', function($scope,$http,$location,alertmsg) {
     $("#sidebar").removeClass("toggled");
   $("#menu-trigger").removeClass("open");
 
