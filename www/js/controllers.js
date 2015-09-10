@@ -253,14 +253,14 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
   // function preventBack() { window.history.forward(1); }
   
 
-    window.onbeforeunload = function (e) {
-            var e = e || window.event;
+    // window.onbeforeunload = function (e) {
+    //         var e = e || window.event;
             
-            if (e) {
-                open(location, '_self').close();
-            }
+    //         if (e) {
+    //             open(location, '_self').close();
+    //         }
 
-         };
+    //      };
          
         
     localStorage.setItem("splash", 0);

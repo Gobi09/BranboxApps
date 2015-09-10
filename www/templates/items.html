@@ -9,11 +9,13 @@
     <div class="card" ng-controller="SubMenuItemController">
        
         <div class="card-body card-padding">
-            
-            <div class="card-header jumbotron ">
-                <a ng-show="userid != null" href="#addTocartpage" class="btn bgm-cyan waves-effect pull-right" style="margin-right:10px;">
+            <a ng-show="userid != null" href="#addTocartpage" class="btn bgm-cyan waves-effect pull-right" style="margin-right:10px;">
                    <i class="md md-shopping-cart md-white"></i>Cart(<span id="cartCount"></span>)
                 </a>
+            <div class="card-header">
+                <!-- <a ng-show="userid != null" href="#addTocartpage" class="btn bgm-cyan waves-effect pull-right" style="margin-right:10px;">
+                   <i class="md md-shopping-cart md-white"></i>Cart(<span id="cartCount"></span>)
+                </a> -->
                 <!-- <div class="chat-search">
                     <div class="fg-line">
                         <input type="search" class="form-control" ng-model="SubMenuItem" placeholder="Search Items ">
@@ -22,7 +24,7 @@
             </div>
 
 
-            <div class="row order" ng-repeat="SubMenuItem in SubMenuItemData  | filter:SubMenuItem">
+            <div class=" order" ng-repeat="SubMenuItem in SubMenuItemData  | filter:SubMenuItem">
                 <div class="col-sm-12">
                     <div class="thumbnail">
                         <input type="hidden" class="price{{$index}}" value="{{item.price}}">
@@ -61,7 +63,7 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>self explanatory-Price</th>
+                                                    <th>Ingredients-Price</th>
                                                     <th>&nbsp;</th>
                                                     <th>Notes</th>
                                                 </tr>
