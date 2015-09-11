@@ -1,38 +1,24 @@
-<style type="text/css"> 
-.card {
-    /*width: auto;*/
-    height: 700px;
-}
-</style>
 <ion-view>
-
     <div class="card" ng-controller="SubMenuItemController">
-       
         <div class="card-body card-padding">
-            <a ng-show="userid != null" href="#addTocartpage" class="btn bgm-cyan waves-effect pull-right" style="margin-right:10px;">
+            <div class="card-header">
+                <a ng-show="userid != null" href="#addTocartpage" class="btn bgm-cyan waves-effect pull-right" style="margin-right:10px;">
                    <i class="md md-shopping-cart md-white"></i>Cart(<span id="cartCount"></span>)
                 </a>
-            <div class="card-header">
-                <!-- <a ng-show="userid != null" href="#addTocartpage" class="btn bgm-cyan waves-effect pull-right" style="margin-right:10px;">
-                   <i class="md md-shopping-cart md-white"></i>Cart(<span id="cartCount"></span>)
-                </a> -->
-                <!-- <div class="chat-search">
-                    <div class="fg-line">
-                        <input type="search" class="form-control" ng-model="SubMenuItem" placeholder="Search Items ">
-                    </div>
-                </div> -->
+
             </div>
-
-
+             <br>   
+              <br>  
+           
             <div class=" order" ng-repeat="SubMenuItem in SubMenuItemData  | filter:SubMenuItem">
-                <div class="col-sm-12">
+                <div class="">
                     <div class="thumbnail">
                         <input type="hidden" class="price{{$index}}" value="{{item.price}}">
                         <img alt="" style="width: 100%;" src="{{SubMenuItem.image}}">
                         <div class="caption">
                             <h4 ng-init="price = SubMenuItem.price" class>{{SubMenuItem.name}}</h4>
-                            <p id="fant"> Price: {{price}} 
-                               <!--  <span class="pull-right">Sub Total: <span id="price{{$index}}"  ng-model="price">{{price}}</span> AED</span> -->
+                            <p id="fant"> Price: {{price}} {{currency}}
+                               <!--  <span class="pull-right">Sub Total: <span id="price{{$index}}"  ng-model="price">{{price}}</span> {{currency}}</span> -->
                            
                             </p>
                             <p>
@@ -70,7 +56,7 @@
                                             </thead>  
                                             <tbody>
                                                 <tr ng-repeat="ingredients in SubMenuItemIngredientsData" ng-if="SubMenuItem.id==ingredients.itemId" >
-                                                    <td>{{ingredients.ingredients}}-{{ingredients.price}} AED</td>
+                                                    <td>{{ingredients.ingredients}}-{{ingredients.price}} {{currency}}</td>
                                                     <td>
                                                         <div class="toggle-switch" data-ts-color="green" ng-if="ingredients.category!='base'">
                                                             <input  type="checkbox" value="NO"  ng-click="savecYesno($event,ingredients,$index);" checked   hidden="hidden" id="ts{{$index}}">

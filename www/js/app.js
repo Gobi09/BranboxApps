@@ -1,10 +1,21 @@
 var apps=angular.module('starter', ['ionic', 'ngRoute', 'starter.controllers', 'starter.services'])
 .run(function($http) {
 
-    
-     
-
-  })
+    localStorage.setItem("cartCount", 0);
+    localStorage.setItem("businessId", 1);
+    localStorage.removeItem("cartCount");
+    localStorage.removeItem("tokenNumber");
+    var db = window.openDatabase("branboxnew", "1.0", "branbox New", 200 * 1024 * 1024);
+        db.transaction(function(tx){
+            tx.executeSql('DROP TABLE IF EXISTS orderitems');
+            tx.executeSql('DROP TABLE IF EXISTS orderingredients');
+             tx.executeSql('DROP TABLE IF EXISTS orderitemingredients');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS orderitems (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER,userId INTEGER, itemName TEXT, image TEXT, price TEXT, subTotal TEXT, quantity TEXT,tax TEXT,offers TEXT,orderType TEXT)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS orderingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER, ingId INTEGER, ingredientsYN TEXT, extras TEXT)'); 
+                tx.executeSql('CREATE TABLE IF NOT EXISTS orderitemingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,itemStorageId INTEGER, businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER, ingId INTEGER, ingredientsYN TEXT, extras TEXT)');                                   
+              
+          });
+    })
 
 .config(['$routeProvider','$stateProvider',
          function($routeProvider,$stateProvider) {
@@ -65,13 +76,9 @@ var apps=angular.module('starter', ['ionic', 'ngRoute', 'starter.controllers', '
     .when('/latestOffers',
         {
             templateUrl: 'templates/latestOffer.html',
-            //controller: 'DashCtrl'
+            controller: 'latestOfferController'
         })
-    // .when('/components',
-    //     {
-    //         templateUrl: 'templates/components.html',
-    //         controller: 'DashCtrl'
-    //     })
+    
     .when('/gallery',
         {
             templateUrl: 'templates/gallery.html',
@@ -95,7 +102,7 @@ var apps=angular.module('starter', ['ionic', 'ngRoute', 'starter.controllers', '
     .when('/message',
         {
             templateUrl: 'templates/message.html',
-            controller: 'registerForm'
+            //controller: 'registerForm'
         })
     .otherwise('/menu');
 

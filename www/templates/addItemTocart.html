@@ -6,7 +6,7 @@
 </style>
 <ion-view>
     <div class="card" ng-controller="AddToCartCtrl">
-        <div class="card-body card-padding" style="padding-left: 10px;">
+        <div class="card-body card-padding" style="padding-left: 10px;"  id="orderdata">
             
             <div class="card-header ">
                 <h2> Name: {{userName}} <small>Email: {{useremail}}</small></h2>
@@ -16,13 +16,13 @@
                  <!-- <h2 class="pull-center" ng-show=" date !='' ">Your Timed Orders<small>final summary</small>  </h2> -->
 
             </div>
-            <div class="row" id="timed">
+            <div class="" id="timed">
                     <div class="col-sm-4">
                         <!-- <p class="c-black f-500 m-b-20">Select date</p> -->
                         <div class="input-group form-group">
                             <span class="input-group-addon"><i class="md md-event"></i></span>
                                 <div class="dtp-container dropdown fg-line">
-                                <input type='text'  id="deliveryDate"  class="form-control date-picker" data-toggle="dropdown" placeholder="Select date">
+                                <input type='text'  id="deliveryDate"  class="form-control date-picker" data-toggle="dropdown" placeholder="Delivery date">
                             </div>
                         </div>
                     </div>
@@ -33,23 +33,23 @@
                         <div class="input-group form-group">
                             <span class="input-group-addon"><i class="md md-access-time"></i></span>
                                 <div class="dtp-container dropdown fg-line">
-                                <input type='text' id="deliveryTime" class="form-control time-picker" data-toggle="dropdown" placeholder="Select Time">
+                                <input type='text' id="deliveryTime" class="form-control time-picker" data-toggle="dropdown" placeholder="Delivery Time">
                             </div>
                         </div>
                     </div>
                 </div>
                         
              <br>
-            <button ng-click="showfun(OrderedItems);" class="btn bgm-orange  btn-sm waves-effect">Timed Delivery Orders</button>
-            <button ng-click="hidefun(OrderedItems);" class="btn bgm-bluegray  btn-sm waves-effect pull-right"> Odinary Orders</button>
-
+            <!-- <button ng-click="showfun();" class="btn bgm-orange  btn-sm waves-effect">Timed Delivery Orders</button>
+            <button ng-click="hidefun();" class="btn bgm-bluegray  btn-sm waves-effect pull-right"> Odinary Orders</button>
+ -->
             <div>
 
 
 
 
             </div>  
-            <div class=" " style="" tabindex="2" id="orderdata">
+            <div class=" " style="" tabindex="2" >
                  <div><br></div>
                 
 
