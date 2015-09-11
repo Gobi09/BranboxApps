@@ -418,7 +418,20 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
     var temp = url.split("=");
     var getMenuId=temp[1];
     //var getMenuId=11;
-
+    localStorage.setItem("cartCount", 0);
+    localStorage.setItem("businessId", 1);
+    localStorage.removeItem("cartCount");
+    localStorage.removeItem("tokenNumber");
+    var db = window.openDatabase("branboxnew", "1.0", "branbox New", 200 * 1024 * 1024);
+        db.transaction(function(tx){
+      tx.executeSql('DROP TABLE IF EXISTS orderitems');
+      tx.executeSql('DROP TABLE IF EXISTS orderingredients');
+       tx.executeSql('DROP TABLE IF EXISTS orderitemingredients');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS orderitems (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER,userId INTEGER, itemName TEXT, image TEXT, price TEXT, subTotal TEXT, quantity TEXT,tax TEXT,offers TEXT,orderType TEXT)');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS orderingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER, ingId INTEGER, ingredientsYN TEXT, extras TEXT)'); 
+          tx.executeSql('CREATE TABLE IF NOT EXISTS orderitemingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,itemStorageId INTEGER, businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER, ingId INTEGER, ingredientsYN TEXT, extras TEXT)');                                   
+        
+    });
           //Menus from server and sync here.....
      $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxSubMenuWithItem.php',{bussId:businessId,menuId:getMenuId}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
       .success(function (json) {
