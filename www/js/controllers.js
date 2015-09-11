@@ -928,7 +928,7 @@ var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1
 
               var new_value=moment(delvDate, 'DD/M/YYYY').format('YYYY/MM/DD');
               var after = moment(SearchDate, 'DD/M/YYYY').format('YYYY/MM/DD');
-              alert(new_value+" "+after);
+             
               if(delvDate=="" || new_value<after)
               {
 
@@ -1396,3 +1396,71 @@ var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1
   // })
 
 //check Login User data
+
+
+//Table Booking
+.controller('tableBooking', function($scope,$http,$location) {
+        
+   $scope.save=function()
+   {
+
+     var email = localStorage.getItem("id");
+      if(email==null)
+      {
+          swal({   
+                          title: "Unable to Book Table",   
+                          text: "Please log in",   
+                          timer: 2000,   
+                          showConfirmButton: false 
+                      });
+
+          $location.path('/login');
+
+
+      }
+      else
+      {
+        var useremail= localStorage.getItem("email");
+      var userId= localStorage.getItem("id");
+      var businessId=localStorage.getItem("businessId");
+     
+      var bookDate = $("#bookDate").val();
+      var bookTime = $("#bookTime").val();
+      var mems = $("#mems").val();
+      
+      
+          var booking={
+            userId:userId,
+           
+            businessId:businessId,
+            bookDate:bookDate,
+            bookTime:bookTime,
+            mems:mems,
+           
+
+            }
+            $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/tablebooking.php',booking,{headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'} })     
+    .success(function(data) {
+         console.log(data);
+
+            swal({   
+                          title: "Table Booking request send to Admin",   
+                          text: "Please Wait for response",   
+                          timer: 2000,   
+                          showConfirmButton: false 
+                      });
+
+            $location.path('/menu');
+
+            }).error(function(){  
+        //alert("server Error");
+      });
+    
+    
+      }
+
+      
+    
+   }
+   
+  })

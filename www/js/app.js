@@ -104,6 +104,11 @@ var apps=angular.module('starter', ['ionic', 'ngRoute', 'starter.controllers', '
             templateUrl: 'templates/message.html',
             //controller: 'registerForm'
         })
+    .when('/tableBooking',
+        {
+            templateUrl: 'templates/tableBooking.html',
+            //controller: 'registerForm'
+        })
     .otherwise('/menu');
 
 }]);
