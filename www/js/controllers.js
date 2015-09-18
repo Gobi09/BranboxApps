@@ -647,7 +647,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
                                  //tx.executeSql('INSERT OR REPLACE INTO orderitemingredients (businessId,menuId,subMenuId,itemId,ingId,ingredientsYN,extras)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.itemId+'","'+json.id+'","'+data+'","")',successID);
                                  tx.executeSql('DELETE FROM orderingredients');   
                                  
-                                  $('#FormValidation')[0].reset();
+                                  $('#FormValidation'+index)[0].reset();
                                   $(".IngDetails1").val("YES");
                                   
                             });
