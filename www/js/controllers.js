@@ -15,29 +15,16 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
       //$location.path('/menu');
     },5000);
   })
-.controller('contactCtrl', function($scope,$http) {
+.controller('contactCtrl', function($scope,$http,$location) {
 
     $("#sidebar").removeClass("toggled");
   $("#menu-trigger").removeClass("open");
    localStorage.setItem("splash", 1);
   
-    $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/branbox.php', {branboxVariable:'contactUs',businessId:'6'},{headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'} })     
+    $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/branbox.php', {branboxVariable:'contactUs',businessId:'1'},{headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'} })     
     .success(function(data) {      
-    // contact map 
-        // var myLatlng = new google.maps.LatLng(data['latitude'], data['longitude']);
-        // var mapOptions = {
-        //   center: myLatlng,
-        //   zoom: 16,
-        //   mapTypeId: google.maps.MapTypeId.ROADMAP
-        // };
-        // var map = new google.maps.Map(document.getElementById("location"), mapOptions);     
-        //   var myLocation = new google.maps.Marker({
-        //     position: new google.maps.LatLng(data['latitude'], data['longitude']),
-        //     map: map,
-        //     title: "My Location"
-        //   });
-        // $scope.map = map;
-        // contact information  
+
+        console.log(data);
         $scope.PhonenumberCall=data['phoneNumber1'];
         $scope.name = '<div class="contactUsName">' +data['brandName']+','+ '</div>'; 
           $scope.companyName = '<div class="contactUsAdd">' +data['companyName']+','+ '</div>'; 
@@ -77,14 +64,14 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
         var businessId=localStorage.getItem("businessId");
         var name=$("#username").val();
         var email=$("#email").val();
-        var id=ocalStorage.getItem("id");
+        var id=localStorage.getItem("id");
         var feedMessage=$("#feedbackMessage").val();
         var feedback={name:name,email:email,userId:id,feedbackMessage:feedMessage,bussId:businessId};
         console.log(feedback);
          $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxFeedBack.php',feedback,{headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'} })     
           .success(function(data) {   
-            console.log(data.success);
-            if(data.success="success")
+            console.log(data);
+            if(data.success=="success")
             {
               swal({   
                   title: "FeedBack Send Successfully",   
@@ -92,6 +79,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
                   timer: 2000,   
                   showConfirmButton: false 
               });
+              $location.path('/menu');
             }
             
             
@@ -253,15 +241,30 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
   // function preventBack() { window.history.forward(1); }
   
 
-    window.onbeforeunload = function (e) {
-            var e = e || window.event;
+    // window.onbeforeunload = function (e) {
+    //         var e = e || window.event;
             
-            if (e) {
-                open(location, '_self').close();
-            }
+    //         if (e) {
+    //             open(location, '_self').close();
+    //         }
 
-         };
+    //      };
          
+
+    localStorage.setItem("cartCount", 0);
+    localStorage.setItem("businessId", 1);
+    var db = window.openDatabase("branboxnew", "1.0", "branbox New", 200 * 1024 * 1024);
+        db.transaction(function(tx){
+      tx.executeSql('DROP TABLE IF EXISTS orderitems');
+      tx.executeSql('DROP TABLE IF EXISTS orderingredients');
+       tx.executeSql('DROP TABLE IF EXISTS orderitemingredients');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS orderitems (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER,userId INTEGER, itemName TEXT, image TEXT, price TEXT, subTotal TEXT, quantity TEXT,tax TEXT,offers TEXT,orderType TEXT)');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS orderingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER,userId INTEGER, ingId INTEGER,ingredients TEXT,price TEXT, ingredientsYN TEXT, extras TEXT)'); 
+          tx.executeSql('CREATE TABLE IF NOT EXISTS orderitemingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,itemStorageId INTEGER, businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER,userId INTEGER, ingId INTEGER, ingredients TEXT, price TEXT, ingredientsYN TEXT, extras TEXT)');                                   
+        
+    });
+
+
         
     localStorage.setItem("splash", 0);
     $("#sidebar").removeClass("toggled");
@@ -349,6 +352,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
               message:'message'
           }
 
+
     if($scope.useremail!="" && $scope.userName!="")
     {
       // if(localStorage.getItem("FeedBackcount")!=0)
@@ -410,7 +414,12 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
 
 .controller('SubMenuController', function($scope,$http,$location,alertmsg) {
     $("#sidebar").removeClass("toggled");
-  $("#menu-trigger").removeClass("open");
+    $("#menu-trigger").removeClass("open");
+
+
+    
+
+
 
   localStorage.setItem("splash", 1);
     var businessId=1;
@@ -418,20 +427,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
     var temp = url.split("=");
     var getMenuId=temp[1];
     //var getMenuId=11;
-    localStorage.setItem("cartCount", 0);
-    localStorage.setItem("businessId", 1);
-    localStorage.removeItem("cartCount");
-    localStorage.removeItem("tokenNumber");
-    var db = window.openDatabase("branboxnew", "1.0", "branbox New", 200 * 1024 * 1024);
-        db.transaction(function(tx){
-      tx.executeSql('DROP TABLE IF EXISTS orderitems');
-      tx.executeSql('DROP TABLE IF EXISTS orderingredients');
-       tx.executeSql('DROP TABLE IF EXISTS orderitemingredients');
-          tx.executeSql('CREATE TABLE IF NOT EXISTS orderitems (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER,userId INTEGER, itemName TEXT, image TEXT, price TEXT, subTotal TEXT, quantity TEXT,tax TEXT,offers TEXT,orderType TEXT)');
-          tx.executeSql('CREATE TABLE IF NOT EXISTS orderingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER, ingId INTEGER, ingredientsYN TEXT, extras TEXT)'); 
-          tx.executeSql('CREATE TABLE IF NOT EXISTS orderitemingredients (id INTEGER PRIMARY KEY AUTOINCREMENT,itemStorageId INTEGER, businessId INTEGER ,menuId INTEGER, subMenuId INTEGER,itemId INTEGER, ingId INTEGER, ingredientsYN TEXT, extras TEXT)');                                   
-        
-    });
+    
           //Menus from server and sync here.....
      $http.post('http://www.appnlogic.com/branboxAppAdmin/branboxAdminUi/ajaxSubMenuWithItem.php',{bussId:businessId,menuId:getMenuId}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
       .success(function (json) {
@@ -454,12 +450,19 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
 .controller('SubMenuItemController', function($scope,$http,$location,alertmsg) {
   $("#sidebar").removeClass("toggled");
   $("#menu-trigger").removeClass("open");
+
+
+    
+
+
   localStorage.setItem("splash", 1);
 
   $scope.useremail= localStorage.getItem("email");
   $scope.userid= localStorage.getItem("id");
   $scope.userName= localStorage.getItem("userName");
   $scope.currency=localStorage.getItem("currencyFormat");
+
+
     var businessId=1;
     var url = $location.url();
     var url = $location.url();
@@ -485,9 +488,9 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
                 for(var i = 0; i < jsonIng.rows.length; i++) {
                     var row = jsonIng.rows[i];
                     var obj = {id:row.id,businessId: row.businessId,menuId:row.menuId,subMenuId:row.subMenuId,itemId:row.itemId,ingredients:row.ingredients,price:row.price,category:row.category};
-                   //console.log(obj);
+                   console.log(obj);
                     ingredients.push(obj);
-                }  
+                }
 
                 //ingredients.push(jsonIng.rows);
 
@@ -567,7 +570,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
     }
 
     $scope.addToCart=function(val,index,json)
-    {   
+    {
 
 
             var email = localStorage.getItem("id");
@@ -586,75 +589,76 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
               //localStorage.setItem("cartCount", 0);
 
               $scope.cartCountGet= localStorage.getItem("cartCount");
-               $("#cartCount").html($scope.cartCountGet);
-
-                      var nFrom = $(this).attr('data-from');
-                      var nAlign = $(this).attr('data-align');
-                      var nIcons = $(this).attr('data-icon');
-                      var nType = $(this).attr('data-type');
-                      var nAnimIn = $(this).attr('data-animation-in');
-                      var nAnimOut = $(this).attr('data-animation-out');
-                      var message="Item Added to The Cart ";
-                      var message1="Item Updated and added to The Cart ";
-          
-             //console.log(json);
-                 //var $row  = jQuery(this).parents('.order');
               var quantity= $("#quantity"+index).val();
-            //var quantity=$(val.target).val();
-            var price=json.price * quantity;
-            //alert(quantity);
-            console.log(json);
-            //alert(price);
+              $("#cartCount").html($scope.cartCountGet);
+              var nFrom = $(this).attr('data-from');
+              var nAlign = "center";
+              var nIcons = $(this).attr('data-icon');
+              var nType = $(this).attr('data-type');
+              var nAnimIn = $(this).attr('data-animation-in');
+              var nAnimOut = $(this).attr('data-animation-out');
+              var message= quantity+"\t"+json.name+" Added to The Cart ";
+            
              var userid= localStorage.getItem("id");
-             console.log(userid);
+             var ingPrice=0;
               var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
                     db.transaction(function(tx){
-                        tx.executeSql('SELECT * FROM orderitems where itemId="'+json.id+'"  and  orderType="order"  ',[], function (tx, results)
+                      tx.executeSql('SELECT * FROM orderitems where itemId="'+json.id+'"  and  orderType="order"  ',[], function (tx, results)
                       {
-                        var itemLength = results.rows.length;
-                        // console.log(itemLength);
-                        // var menudatas=results.resultsows;
-                        //  if(itemLength==1 )
-                        //  {
-                        //     tx.executeSql('UPDATE  orderitems SET quantity="'+quantity+'" ,subTotal="'+price+'"  WHERE itemId="'+json.id+'" and orderType="order"',successID);
-                        //       // $("#addtocart"+index).removeClass("bgm-green");
-                        //       // $("#addtocart"+index).addClass("bgm-deeporange");
-                        //     alertmsg.notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut,message1);
-                        //  }
-                        //  else
-                        //  {
-                          //var lastInsertId
-                           tx.executeSql('INSERT OR REPLACE INTO orderitems (businessId,menuId,subMenuId,itemId,userId,itemName,image,price,subTotal,quantity,tax,offers,orderType)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.id+'","'+userid+'","'+json.name+'","'+json.image+'","'+json.price+'","'+price+'","'+quantity+'","'+json.tax+'","'+json.offers+'","order")',successID,function(tx, sql_res) {
-                
-                      var itemLastInsertId = sql_res.insertId;
-                       tx.executeSql('SELECT * FROM orderingredients',[], function (tx, results)
+                        tx.executeSql('SELECT * FROM orderingredients',[], function (tx, results)
                         {
-                             var IngredientsDate=results.rows;
-                             console.log(IngredientsDate);
-
-                              var itemLength = results.rows.length;
-                              var menudatas=results.rows;
-                              //alert(itemLength);
-                                //alert(results.rows.item(0).subMenuName);
-                              for(var i = 0; i < itemLength; i++) {
+                          var itemLength = results.rows.length;
+                          var menudatas=results.rows;
+                          
+                              for(var i = 0; i < itemLength; i++) 
+                              {
                                   var row = menudatas.item(i);
-                                  console.log(row );
-                                  tx.executeSql('INSERT OR REPLACE INTO orderitemingredients (itemStorageId,businessId,menuId,subMenuId,itemId,ingId,ingredientsYN,extras)VALUES("'+itemLastInsertId+'","'+row.businessId+'","'+row.menuId+'","'+row.subMenuId+'","'+row.itemId+'","'+row.ingId+'","'+row.ingredientsYN+'","'+row.extras+'")',successID);
-                                  //var obj = {id:row.id,businessId: row.businessId,menuId:row.menuId,subMenuName:row.subMenuName,image:row.image,position:row.position,status:row.status,online:row.online,createdTime:row.createdTime};
-                                 // json_arr.push(obj);
-                              }  
+                                  console.log(row.price);
+                                 ingPrice+=parseInt(row.price);
+                              }
+                                var miniTotal=parseInt(json.price)+ingPrice;
+                                console.log(miniTotal);
+                                var subtotalValue=miniTotal * quantity;
+                                //console.log(ingPrice);
+                                  //var subtotalValue=ingPrice+price;
+                                  console.log(subtotalValue);
+                            var itemLength = results.rows.length;
+                            tx.executeSql('INSERT OR REPLACE INTO orderitems (businessId,menuId,subMenuId,itemId,userId,itemName,image,price,subTotal,quantity,tax,offers,orderType)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.id+'","'+userid+'","'+json.name+'","'+json.image+'","'+miniTotal+'","'+subtotalValue+'","'+quantity+'","'+json.tax+'","'+json.offers+'","order")',successID,function(tx, sql_res) {
+                    
+                          var itemLastInsertId = sql_res.insertId;
+                           tx.executeSql('SELECT * FROM orderingredients',[], function (tx, results)
+                            {
+                                 var IngredientsDate=results.rows;
+                                 console.log(IngredientsDate);
 
-                             //tx.executeSql('INSERT OR REPLACE INTO orderitemingredients (businessId,menuId,subMenuId,itemId,ingId,ingredientsYN,extras)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.itemId+'","'+json.id+'","'+data+'","")',successID);
-                             tx.executeSql('DELETE FROM orderingredients');   
+                                  var itemLength = results.rows.length;
+                                  var menudatas=results.rows;
+                                  //alert(itemLength);
+                                    //alert(results.rows.item(0).subMenuName);
+                                  for(var i = 0; i < itemLength; i++) {
+                                      var row = menudatas.item(i);
+                                      console.log(row );
+                                      tx.executeSql('INSERT OR REPLACE INTO orderitemingredients (itemStorageId,businessId,menuId,subMenuId,itemId,userId,ingId,ingredients,price,ingredientsYN,extras)VALUES("'+itemLastInsertId+'","'+row.businessId+'","'+row.menuId+'","'+row.subMenuId+'","'+row.itemId+'","'+row.userId+'","'+row.ingId+'","'+row.ingredients+'", "'+row.price+'","'+row.ingredientsYN+'","'+row.extras+'")',successID);
+                                      //var obj = {id:row.id,businessId: row.businessId,menuId:row.menuId,subMenuName:row.subMenuName,image:row.image,position:row.position,status:row.status,online:row.online,createdTime:row.createdTime};
+                                     // json_arr.push(obj);
+                                  }  
 
+                                 
+                                 //tx.executeSql('INSERT OR REPLACE INTO orderitemingredients (businessId,menuId,subMenuId,itemId,ingId,ingredientsYN,extras)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.itemId+'","'+json.id+'","'+data+'","")',successID);
+                                 tx.executeSql('DELETE FROM orderingredients');   
+                                 
+                                  $('#FormValidation')[0].reset();
+                                  $(".IngDetails1").val("YES");
+                                  
+                            });
+                              function successID(){
+                                  return true;
+                              }
+                           });
+                              
                         });
-                          function successID(){
-                              return true;
-                          }
 
 
-    
-        });
                         
                             $("#addtocart"+index).removeClass("bgm-bluegray");
                             $("#addtocart"+index).addClass("bgm-green");
@@ -686,18 +690,30 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
 
        $scope.savecYesno=function(event,json,index)
        {
-          var data= $(event.target).val();
+          var data= $("#IngDetails"+index).val();
+          var userId = localStorage.getItem("id");
+          console.log(json);
+          
           if(data=="NO")
           {
-            $(event.target).val("YES");
-            //alert(data);
+            $("#IngDetails"+index).val("YES");
+            $("#notes"+index).val("");
+            var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
+              db.transaction(function(tx){
+
+                 tx.executeSql('DELETE FROM orderingredients where ingId="'+json.id+'"',successID);
+                  function successID(){
+                      return true;
+                  }
+              })
+              
+            
           } 
           else
           {
-            $(event.target).val("NO");
-            //alert(data);
-          }
-          var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
+            $("#IngDetails"+index).val("NO");
+            
+              var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
               db.transaction(function(tx){
                 tx.executeSql('SELECT * FROM orderingredients where ingId="'+json.id+'"',[], function (tx, results)
                 {
@@ -710,7 +726,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
                    }
                    else
                    {
-                     tx.executeSql('INSERT OR REPLACE INTO orderingredients (businessId,menuId,subMenuId,itemId,ingId,ingredientsYN,extras)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.itemId+'","'+json.id+'","'+data+'","")',successID);
+                      tx.executeSql('INSERT OR REPLACE INTO orderingredients (businessId,menuId,subMenuId,itemId,userId,ingId,ingredients,price,ingredientsYN,extras)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.itemId+'","'+userId+'","'+json.id+'","'+json.ingredients+'","'+json.price+'","'+data+'","")',successID);                     
                      
                    }
                  
@@ -718,19 +734,24 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
                   function successID(){
                       return true;
                   }
-
-            
-       });
+              });
+          }
      }
 
-       $scope.saveExtra=function(event,json,index)
-       {
+     $scope.saveExtra=function(event,json,index)
+     {
           var data= $(event.target).val();
           //alert(json.id);
-
-          var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
+          console.log(json);
+          var userId = localStorage.getItem("id");
+          var YN=$("#IngDetails"+index).val();
+          
+          if(YN=="NO")
+          {
+              
+              var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
               db.transaction(function(tx){
-                  tx.executeSql('SELECT * FROM orderingredients where ingId="'+json.id+'"',[], function (tx, results)
+                tx.executeSql('SELECT * FROM orderingredients where ingId="'+json.id+'"',[], function (tx, results)
                 {
                   var itemLength = results.rows.length;
                   //alert(itemLength);
@@ -742,9 +763,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
                    }
                    else
                    {
-                     tx.executeSql('INSERT OR REPLACE INTO orderingredients (businessId,menuId,subMenuId,itemId,ingId,ingredientsYN,extras)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.itemId+'","'+json.id+'","YES","'+data+'")',successID);
-                     
-                    
+                      tx.executeSql('INSERT OR REPLACE INTO orderingredients (businessId,menuId,subMenuId,itemId,userId,ingId,ingredients,price,ingredientsYN,extras)VALUES("'+json.businessId+'","'+json.menuId+'","'+json.subMenuId+'","'+json.itemId+'","'+userId+'","'+json.id+'","'+json.ingredients+'","'+json.price+'","YES","'+data+'")',successID);                     
                    }
                  
                 });
@@ -753,6 +772,11 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
                   }
               });
             }
+            else
+            {
+                $(event.target).val("");
+            }
+      }
 
 
 
@@ -767,7 +791,7 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
 
 })
 
-.controller('AddToCartCtrl', function($scope,$http,$location) {
+.controller('AddToCartCtrl', function($scope,$http,$location,alertmsg) {
 
   //alert("data");
   localStorage.setItem("splash", 1);
@@ -777,68 +801,179 @@ angular.module('starter.controllers', ['ngRoute','ngSanitize'])
 
   $scope.date= localStorage.getItem("delvDate");
   $scope.time= localStorage.getItem("delvTime");
-
+  $scope.currency=localStorage.getItem("currencyFormat");
   //alert($scope.userName);
     $scope.totalAmount="";
+    $scope.IngredientsData= "";
      $scope.FinalOrderData="";
      //$scope.OrderedItems="";
      $scope.timedDelivery="";
-     var json_arr =  [];  
+     var json_arr =  []; 
+     var json_arrIng=[]; 
        $("#orderdata").hide();
-      //  $("#timed").hide();
+       swal({   
+                  title: "Loading...",   
+                  text: "Please Wait",   
+                  timer: 7000,   
+                  showConfirmButton: false 
+                });
 
-      setTimeout(function(){
-        //alert();
-var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
+
+   
+        setTimeout(function(){
+            var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
               db.transaction(function(tx){
                   tx.executeSql('SELECT * FROM orderitems',[], function (tx, results)
                   {
 
                     var itemLength = results.rows.length;
-                    //alert(itemLength+"length");
-                    //console.log(results.rows.item(0));
 
                     var menudatas=results.rows;
-                    for(var i = 0; i < itemLength; i++) 
+                    for(var i = 0; i < itemLength; i++)
                     {
-                        var row = menudatas.item(i);
-                        var obj = {id:row.id,businessId:row.businessId,menuId:row.menuId,subMenuId:row.subMenuId,itemId:row.itemId,userId:row.userId,itemName:row.itemName,image:row.image,price:row.price,quantity:row.quantity,subTotal:row.subTotal,orderType:row.orderType};
-                        json_arr.push(obj);
-                        //console.log(json_arr);
-                        //alert(row.menuId);
+                      var row = menudatas.item(i);
+                      var obj = {id:row.id,businessId:row.businessId,menuId:row.menuId,subMenuId:row.subMenuId,itemId:row.itemId,userId:row.userId,itemName:row.itemName,image:row.image,price:row.price,quantity:row.quantity,subTotal:row.subTotal,orderType:row.orderType};
+                      json_arr.push(obj);
                     }  
                     $scope.OrderedItems=json_arr;
-                    //alert(json_arr.menuId);
-                    console.log( $scope.OrderedItems);
                   });
               });
+           $("#orderdata").show();
+        },5000)
+   
+
+        $scope.modelBox=function(id)
+        {
+            console.log($scope.OrderedItems);
+            $scope.hashvalue= $scope.OrderedItems[0].$$hashKey;
+          //alert(id);
+          $scope.OrderedIngItems="";
+          $scope.ingCountShow="";
+           var json_arrIng=[]; 
+           var count=0;
+          var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
+          db.transaction(function(tx)
+          {
+            tx.executeSql('SELECT * FROM orderitemingredients WHERE itemStorageId="'+id+'"',[], function (tx, results)
+            {
+              var ingredientsDatas=results.rows;
+              var itemLengthIng = results.rows.length;
+              for(var i = 0; i < itemLengthIng; i++) 
+              {
+                  var row = ingredientsDatas.item(i);
+                  var objIng = {id:row.id,itemStorageId:row.itemStorageId,businessId:row.businessId,menuId:row.menuId,subMenuId:row.subMenuId,itemId:row.itemId,userId:row.userId,ingId:row.ingId,ingredient:row.ingredients,ingPrice:row.price,ingYN:row.ingredientsYN,notes:row.extras};
+                  json_arrIng.push(objIng);
+                  count=count+1;
+                  $scope.ingCountShow=count;
+
+              }
+            });
+                $scope.OrderedIngItems=json_arrIng;
+                console.log($scope.ingCountShow);
+                console.log($scope.OrderedIngItems);
+          });
+          $("#exampleModal").modal("show");
+        }
+
+        $scope.saveExtra=function(event,id)
+        {
+            var data= $(event.target).val();
+            console.log($scope.OrderedItems);
+            var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
+            db.transaction(function(tx){
+                tx.executeSql('UPDATE  orderitemingredients SET extras="'+data+'" WHERE id="'+id+'" ',successID);
+                function successID(){
+                    return true;
+                }
+            });
+        }
+
+        $scope.showing=function()
+        {
+            console.log($scope.OrderedItems);
+        }
+        // $scope.removeBtu=function(id)
+        // {
+        //       console.log($scope.OrderedItems);
+        //     alert(id);
+
+        //     return;
+        // }
+        $scope.removeOrderItemIng=function(index,OrderedItems,json,id) 
+        {
+            // var val=1;
+            // var index=2;
+            // order=OrderedItems;
+            // $scope.getsubtotal(val,index,order);
+            // console.log(json);
+            // alert(id);
+           // $scope.OrderedItems=angular.copy(OrderedItems);
+
+            console.log($scope.OrderedItems);
+            var itemIndex=json.itemStorageId-1;
+            var ingPrice=parseInt(json.ingPrice);
+            var itemQuan=parseInt(OrderedItems[itemIndex].quantity);
+            //var IngTotPrice=ingPrice*itemQuan;
+            var itemPrice=parseInt(OrderedItems[itemIndex].price)-ingPrice;
+            var itemSubTotal=itemPrice*itemQuan;
+            console.log(itemIndex+","+ingPrice+","+itemQuan+","+itemPrice+","+itemSubTotal);
+
+            // $scope.OrderedItems[itemIndex].price=itemPrice;
+            // $scope.OrderedItems[itemIndex].quantity=itemQuan;
+            // $scope.OrderedItems[itemIndex].subTotal=itemSubTotal;
 
 
-       $("#orderdata").show();
-      },5000)
-     
-        $scope.showfun=function(OrderedItems){
+                        // console.log($scope.OrderedItem);
+                       
+            var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
+            db.transaction(function(tx){
+                tx.executeSql('UPDATE  orderitems SET quantity="'+itemQuan+'", price="'+itemPrice+'", subTotal="'+itemSubTotal+'"  WHERE id="'+json.itemStorageId+'" and orderType="order" ',successID);
+                tx.executeSql('DELETE FROM orderitemingredients where id="'+id+'"',successID);
+                
+              });
 
-            $("#orderdata").show();
-             $("#timed").show();
-             $scope.timedDelivery=1;
+              function successID(){
+                      return true;
+                  }
+            $scope.OrderedItems.splice(itemIndex,1,{
+                //$$hashKey:$scope.hashvalue,
+                id:$scope.OrderedItems[itemIndex].id,
+                businessId:$scope.OrderedItems[itemIndex].businessId,
+                itemId:$scope.OrderedItems[itemIndex].itemId,
+                subMenuId:$scope.OrderedItems[itemIndex].subMenuId,
+                menuId:$scope.OrderedItems[itemIndex].menuId,
+                userId:$scope.OrderedItems[itemIndex].userId,
+                itemName:$scope.OrderedItems[itemIndex].itemName,
+                price:itemPrice,
+                image:$scope.OrderedItems[itemIndex].image,
+                quantity: itemQuan,
+                subTotal: itemSubTotal,
+                orderType:$scope.OrderedItems[itemIndex].orderType
+
+            }); 
+
+          $scope.OrderedIngItems.splice(index,1);
+       
+          console.log($scope.OrderedItems);
+           $scope.getTotal();
 
         }
-        $scope.hidefun=function(OrderedItems){
 
-            //$("#orderdata").hide();
-            $("#orderdata").show();
-             $("#timed").hide();
-             $scope.timedDelivery=0;
-        }
+       
 
         $scope.removeOrder = function(index,order) {
-          console.log(order);
-         
+            console.log(order);
+            var nFrom = "top";
+            var nAlign = "center";
+            var nIcons = "fa fa-comments";
+            var nType = "inverse";
+            var nAnimIn ="animated bounceIn";
+            var nAnimOut ="animated bounceOut";
+            var message=order.quantity+" "+order.itemName+" Deleted From the Cart";
+            
             var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
              db.transaction(function(tx){
-                  tx.executeSql('DELETE FROM orderitems where itemId="'+order.id+'"',successID);
-
+                  tx.executeSql('DELETE FROM orderitems where id="'+order.id+'"',successID);
                   tx.executeSql('DELETE FROM orderitemingredients where itemStorageId="'+order.id+'"',successID)
                  
               });
@@ -846,11 +981,13 @@ var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1
                       return true;
                   }
           $scope.OrderedItems.splice(index,1);
+          alertmsg.notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut,message);
            //alert(order.itemId);
         };
 
         $scope.getTotal = function(){
           //alert("call from");
+          // console.log("call");
             var total = 0;
             var length= $scope.OrderedItems.length;
 
@@ -884,22 +1021,69 @@ var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1
             var data= angular.copy($scope.OrderedItems);
            // console.log(data);
             var price=$scope.OrderedItems[index].price;
-            var total = quantity*price;
+            
+            var ingPrice=0;
             //alert($scope.OrderedItems[index].orderType);
               //alert($scope.OrderedItems[index].itemId);
             var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
               db.transaction(function(tx){
+                  // tx.executeSql('SELECT * FROM orderitemingredients where itemStorageId="'+$scope.OrderedItems[index].id+'" ',[], function (tx, results)
+                  // {
+                  //   var itemLength = results.rows.length;
+                  //   var menudatas=results.rows;
+                    
+                        // for(var i = 0; i < itemLength; i++) 
+                        // {
+                        //     var row = menudatas.item(i);
+                        //     console.log(row);
+                        //    ingPrice+=parseInt(row.price);
+                        // }
+
+                        // alert(ingPrice);
+                        // var miniTotal=parseInt(price)+ingPrice;
+                        // if(ingPrice!=0)
+                        // {
+                            // alert(miniTotal);
+                            $scope.SumOfSubtotal = quantity*parseInt(price);  
+                        //     alert($scope.SumOfSubtotal);
+                        // }
+                        // else{
+                        //     $scope.SumOfSubtotal = quantity*price;  
+                        // }
+                        
+
+
+
+                        $scope.OrderedItems.splice(index,1,{
+                            id:$scope.OrderedItems[index].id,
+                            businessId:$scope.OrderedItems[index].businessId,
+                            itemId:$scope.OrderedItems[index].itemId,
+                            subMenuId:$scope.OrderedItems[index].subMenuId,
+                            menuId:$scope.OrderedItems[index].menuId,
+                            userId:$scope.OrderedItems[index].userId,
+                            itemName:$scope.OrderedItems[index].itemName,
+                            price:$scope.OrderedItems[index].price,
+                            image:$scope.OrderedItems[index].image,
+                            quantity: quantity,
+                            subTotal: $scope.SumOfSubtotal,
+                            orderType:$scope.OrderedItems[index].orderType
+
+                        }); 
+                            console.log($scope.OrderedItems);
+                            $scope.getTotal();
+                  // });
+
                 tx.executeSql('SELECT * FROM orderitems where itemId="'+$scope.OrderedItems[index].itemId+'" and orderType="order"',[], function (tx, results)
                 {
                   var itemLength = results.rows.length;
                    if(itemLength==1 )
                     {
-                      tx.executeSql('UPDATE  orderitems SET quantity="'+quantity+'" ,subTotal="'+total+'"  WHERE itemId="'+$scope.OrderedItems[index].itemId+'" and orderType="order" ',successID);
+                      tx.executeSql('UPDATE  orderitems SET quantity="'+quantity+'" ,subTotal="'+$scope.SumOfSubtotal+'"  WHERE itemId="'+$scope.OrderedItems[index].itemId+'" and orderType="order" ',successID);
                       //alert("updated");
                     }
                     else
                     {
-                      tx.executeSql('UPDATE  orderitems SET quantity="'+quantity+'" ,subTotal="'+total+'"  WHERE itemId="'+$scope.OrderedItems[index].itemId+'" and orderType="offer" ',successID);
+                      tx.executeSql('UPDATE  orderitems SET quantity="'+quantity+'" ,subTotal="'+$scope.SumOfSubtotal+'"  WHERE itemId="'+$scope.OrderedItems[index].itemId+'" and orderType="offer" ',successID);
                     }
                 });
 
@@ -912,22 +1096,7 @@ var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1
                   }
 
                 });
-            $scope.OrderedItems.splice(index,1,{
-              businessId:$scope.OrderedItems[index].businessId,
-              itemId:$scope.OrderedItems[index].itemId,
-              subMenuId:$scope.OrderedItems[index].subMenuId,
-              menuId:$scope.OrderedItems[index].menuId,
-              userId:$scope.OrderedItems[index].userId,
-              itemName:$scope.OrderedItems[index].itemName,
-              price:$scope.OrderedItems[index].price,
-              image:$scope.OrderedItems[index].image,
-              quantity: quantity,
-              subTotal: total,
-              orderType:$scope.OrderedItems[index].orderType
-
-            }); 
-            // console.log($scope.OrderedItem);
-            $scope.getTotal();
+            
           }
         };
 
@@ -972,7 +1141,7 @@ var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1
             
           var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1024);
               db.transaction(function(tx){
-                  tx.executeSql('SELECT * FROM orderitemingredients',[], function (tx, results)
+                tx.executeSql('SELECT * FROM orderitemingredients',[], function (tx, results)
                 {
                   var itemLength = results.rows.length;
                   var ingredientsDatas=results.rows;
@@ -980,7 +1149,7 @@ var db = window.openDatabase("branboxnew", "1.0", "branbox Demo", 200 * 1024 * 1
                   {
                     for(var i = 0; i < itemLength; i++) {
                           var row = ingredientsDatas.item(i);
-                          var obj = {id:row.id,itemStorageId:row.itemStorageId,businessId:row.businessId,menuId:row.menuId,subMenuId:row.subMenuId,itemId:row.itemId,ingId:row.ingId,ingYN:row.ingredientsYN,notes:row.extras};
+                          var obj = {id:row.id,itemStorageId:row.itemStorageId,businessId:row.businessId,menuId:row.menuId,subMenuId:row.subMenuId,itemId:row.itemId,userId:row.userId,ingId:row.ingId,ingYN:row.ingredientsYN,notes:row.extras};
                           json_arr.push(obj);
                       }
                        $scope.additionalData=json_arr;

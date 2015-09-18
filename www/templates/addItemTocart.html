@@ -2,9 +2,36 @@
 .card {
     width: auto;
     height: 700px;
+    background: #fff;
 }
 </style>
 <ion-view>
+
+    
+<!-- <div class="btn-demo">
+    <a data-toggle="modal"  id="sssss" class="btn btn-default">Without Animation</a>
+</div>
+<div class="modal" id="noAnimation" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper. Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla. Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link">Save changes</button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
     <div class="card" ng-controller="AddToCartCtrl">
         <div class="card-body card-padding" style="padding-left: 10px;"  id="orderdata">
             
@@ -40,43 +67,40 @@
                 </div>
                         
              <br>
-            <!-- <button ng-click="showfun();" class="btn bgm-orange  btn-sm waves-effect">Timed Delivery Orders</button>
-            <button ng-click="hidefun();" class="btn bgm-bluegray  btn-sm waves-effect pull-right"> Odinary Orders</button>
- -->
             <div>
-
-
-
-
             </div>  
             <div class=" " style="" tabindex="2" >
                  <div><br></div>
                 
+                 <center>
+
 
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Item</th>
                             <th>Quantity</th>
-                            <th>Price</th>
+                            <th>Price {{currency}}</th>
                             <th>Sub Total</th>
                         </tr>
                     </thead>
                     <tbody>
+                        
                          <tr ng-repeat="order in OrderedItems">
                             <td>
                                 <div>
-                                  
                                     <img src="{{order.image}}" class="text-center" style="width:80px;"><br>
                                     <span class="span-sty" >{{order.itemName}}</span><br>
                                 </div>
-                                
+                                <button type="button" class="btn bgm-teal waves-effect" ng-click="modelBox(order.id)" >Details</button>
+
+                                <!-- <button class="btn bgm-teal waves-effect" type="button" ng-init="resulfIngredient=displayIngredient(order.id)" data-toggle="collapse" data-target="#collapseExample{{$index}}" aria-expanded="false" aria-controls="collapseExample">Details</button>
+ -->
                             </td>
                             <!-- <td></td> -->
                             <td> 
                                 <br>
                                 <input type="text" style="width:30px;" class="form-control"ng-keyup="getsubtotal($event,$index,order);" name="quantity"class="item item-input "  id="quantity" value="{{order.quantity}}">
-
 
                             </td>
                             <td> 
@@ -91,18 +115,18 @@
                                 <input type="hidden" style="width:60px" readonly name="subtotal"class="form-control" id="subTotal" value="{{order.subTotal}}">
                                  <button ng-click="removeOrder($index,order);" class="btn button-small bgm-red button-assertive"><i class="md  md-clear"></i>
                                 </button>
-
                             </td>
-                            <!-- <td>
-                                <br><br>
-                                <button ng-click="removeOrder($index,order);" class="btn button-small bgm-red button-assertive"><i class="md  md-clear"></i>
-                                </button>
-                            </td> -->
                         </tr>
-                        
+                        <tr>
+                            <td colspan="4">
+                                <div class="collapse" id="collapseExample{{$index}}">
+                                  
+                                </div>
+                            </td>                            
+                        </tr>
                     </tbody>
-
                 </table>
+                    </center>
                 <div class="button button-small  icon-right  text-center">
                      Total: 
                       {{ getTotal(); }} AED
@@ -111,14 +135,6 @@
                       <br>
                       <button ng-click="getFood(OrderedItems);" id="food" data-type="inverse" data-animation-in="animated flipInY"  data-animation-Out="animated flipOutY" class="btn bgm-green btn-sm waves-effect t">Get Food</button>
                 </div>
-
-                
-
-               <!--  <div class=" button button-small button-assertive  icon-right  text-center"   >
-                   
-                </div> -->
-               
-
             </div>
 
           
@@ -127,6 +143,60 @@
                 </a>
             
         </div>
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel">Details</h4>
+                              </div>
+                              <div class="modal-body">
+                                <form>
+                                     <div class="table-responsive" ng-show="ingCountShow > 0">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ingredients</th>
+                                                    <th>Price{{currency}}</th>
+                                                    <th>Notes</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>  
+                                            <tbody>
+                                                <tr ng-repeat="ingredients in OrderedIngItems"  >
+                                                    <td>
+                                                        {{ingredients.ingredient}}
+                                                    </td>
+                                                    <td>
+                                                        <div ng-if="ingredients.ingPrice>0">
+                                                             {{ingredients.ingPrice}}
+                                                        </div>
+                                                        <div ng-if="ingredients.ingPrice==0">
+                                                            -
+                                                        </div>
+                                                       
+                                                    </td>
+                                                    <td>
+                                                        <input id="notes{{$index}}" name="notes" value="{{ingredients.notes}}" style="width:100px;" class="form-control input-sm" ng-keyup="saveExtra($event,ingredients.id)" type="email" placeholder="Notes">
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="removeOrderItemIng($index,OrderedItems,ingredients,ingredients.id);" class="btn button-small bgm-red button-assertive"><i class="md  md-clear"></i>
+                                                            </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>     
+                                        </table>
+                                    </div>
+                                    </form>
+                                </div>    
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
     </div>
      <script type="text/javascript">
         $('.datetimepicker').datetimepicker({
@@ -162,5 +232,42 @@ $(document).ready(function(){
 
 
 </script>
+
+
+
+<script type="text/javascript">
     
+$(document).ready(function(){
+
+  setTimeout(function(){
+var scope = angular.element('[ng-controller=AddToCartCtrl]').scope();
+scope.$apply(function(){
+
+    ingredientsItemData= scope.OrderedIngItems;
+    console.log(ingredientsItemData);
+ 
+angular.element('[ng-controller=AddToCartCtrl]').scope();
+    
+    
+});
+},5000)
+});
+
+    
+    $("#sssss").click(function(){
+         var recipient = $(this).data('whatever');
+         alert( recipient);
+         $('#noAnimation').modal('show');
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
 </ion-view>
