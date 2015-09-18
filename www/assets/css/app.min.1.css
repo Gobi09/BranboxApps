@@ -21,7 +21,7 @@ body {
   margin: 0;
 }
 #menu-size{
-  font-size: 18px;
+  font-size: 22px;
   
 }
 
@@ -10447,7 +10447,7 @@ body #content {
   color: #4C4C4C;
   font-weight: 500;
   /* gobi  change size  */
-  font-size: 20px;
+  font-size: 25px;
   position: relative;
 }
 
@@ -10928,7 +10928,7 @@ input:focus {
 }
 
 .listview .lv-item .lv-small {
-  font-size: 12px;
+  font-size: 15px;
   color: #000;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -14633,7 +14633,7 @@ a.thumbnail.active {
 }
 .order .thumbnail .caption #fant{
     font-family: gobiNew;
-    font-size: 17px;
+    font-size: 20px;
     
 }
 /*gobi*/
